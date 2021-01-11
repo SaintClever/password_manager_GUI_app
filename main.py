@@ -1,35 +1,31 @@
 from tkinter import *
 from tkinter import messagebox
+from random import choice, randint, shuffle
+import string, pyperclip
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 # Password Generator Project
-import random
-letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-nr_letters = random.randint(8, 10)
-nr_symbols = random.randint(2, 4)
-nr_numbers = random.randint(2, 4)
+def generate_password():
+    letters = string.ascii_letters
+    numbers = string.digits
+    symbols = string.punctuation
 
-password_list = []
+    password_letters = [choice(letters) for letter in range(randint(8, 10))]
 
-for char in range(nr_letters):
-  password_list.append(random.choice(letters))
+    password_symbols = [choice(symbols) for symbol in range(randint(2, 4))]
 
-for char in range(nr_symbols):
-  password_list += random.choice(symbols)
+    password_numbers = [choice(numbers) for number in range(randint(2, 4))]
 
-for char in range(nr_numbers):
-  password_list += random.choice(numbers)
+    password_list = password_letters + password_symbols + password_numbers
 
-random.shuffle(password_list)
+    shuffle(password_list)
 
-password = ""
-for char in password_list:
-  password += char
+    password = ''.join(password_list)
 
-print(f"Your password is: {password}")
+    password_entry.delete(0, END)
+    password_entry.insert(0, password)
+    pyperclip.copy(password)
 
 
 
@@ -40,7 +36,7 @@ def save_password():
     password = password_entry.get()
 
     if website == '' or email == '' or password == '':
-        messagebox.showinfo(title='Oops', message='OopsEmpty fields present')
+        messagebox.showinfo(title='Oops!', message='Empty fields present')
     else:
 
         # message box
@@ -103,7 +99,7 @@ password_entry = Entry(width=21)
 password_entry.grid(column=1, row=3, padx=2.5, pady=2.5)
 password_entry.config(highlightbackground='#eeeeee', highlightthickness=.5)
 
-password_btn = Button(text='generate password')
+password_btn = Button(text='generate password', command=generate_password)
 password_btn.grid(column=2, row=3)
 
 
