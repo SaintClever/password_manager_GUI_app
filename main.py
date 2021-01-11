@@ -10,8 +10,12 @@ def save_password():
     email = email_username_entry.get()
     password = password_entry.get()
 
-    with open('data.txt', mode='a') as file:
-        file.write(f'\n{website} | {email} | {password}')
+    with open('data.txt', 'a') as file:
+        file.write(f'{website} | {email} | {password}\n')
+
+    website_entry.delete(0, END)
+    # email_username_entry.delete(0, END) # I rather save my email
+    password_entry.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -40,7 +44,7 @@ website_label.grid(column=0, row=1)
 
 website_entry = Entry(width=35)
 website_entry.grid(column=1, row=1, columnspan=2, padx=2.5, pady=2.5)
-website_entry.config(highlightbackground='#eeeeee')
+website_entry.config(highlightbackground='#eeeeee', highlightthickness=.5)
 website_entry.focus()
 
 
@@ -50,7 +54,7 @@ email_username_label.grid(column=0, row=2)
 
 email_username_entry = Entry(width=35)
 email_username_entry.grid(column=1, row=2, columnspan=2, padx=2.5, pady=2.5)
-email_username_entry.config(highlightbackground='#eeeeee')
+email_username_entry.config(highlightbackground='#eeeeee', highlightthickness=.5)
 email_username_entry.insert(0, 'parchment@gmx.com')
 
 
@@ -60,7 +64,7 @@ password_label.grid(column=0, row=3)
 
 password_entry = Entry(width=21)
 password_entry.grid(column=1, row=3, padx=2.5, pady=2.5)
-password_entry.config(highlightbackground='#eeeeee')
+password_entry.config(highlightbackground='#eeeeee', highlightthickness=.5)
 
 password_btn = Button(text='generate password')
 password_btn.grid(column=2, row=3)
