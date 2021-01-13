@@ -9,7 +9,7 @@ import string, pyperclip, json
 def generate_password():
     letters = string.ascii_letters
     numbers = string.digits
-    symbols = string.punctuation
+    symbols = [sym for sym in string.punctuation if sym not in ('"', "'")] # remove quotation marks
 
     password_letters = [choice(letters) for letter in range(randint(8, 10))]
 
@@ -75,8 +75,26 @@ def save_password():
 
 
 # ---------------------------- SEARCH PASSWORD ------------------------------- #
+def search_password():
+    try:
+        with open('data.json', 'r') as file:
+            data = json.load(file)
 
+            website = website_entry.get()
 
+            try:
+                email = data[website_entry.get()]['email']
+                password = data[website_entry.get()]['password']
+                # print(website, email, password)
+
+                messagebox.showinfo(title=f'{website}', message=f'website: {website}\n email: {email}\n password: {password}')
+
+            except KeyError:
+                messagebox.showinfo(title=f'{website}', message=f'{website} not found.')
+
+    except FileNotFoundError:
+        messagebox.showinfo(title='Error', message='no data available')
+        
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -108,7 +126,7 @@ website_entry.grid(column=1, row=1, padx=2.5, pady=2.5)
 website_entry.config(highlightbackground='#eeeeee', highlightthickness=.5)
 website_entry.focus()
 
-search_btn = Button(text='search', width=13)
+search_btn = Button(text='search', width=13, command=search_password)
 search_btn.grid(column=2, row=1)
 
 
