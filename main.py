@@ -112,7 +112,7 @@ canvas = Canvas(width=100, height=100, highlightthickness=0)
 # bg_label.place(x=0, y=0)
 
 # logo
-logo_img = PhotoImage(file='assets/logo_02.png')
+logo_img = PhotoImage(file='assets/logo.png')
 canvas.create_image(50, 50, image=logo_img)
 canvas.grid(column=1, row=0)
 

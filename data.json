@@ -1,6 +1,10 @@
 {
-    "amazon": {
-        "email": "parchment@gmx.com",
-        "password": "2a<901RuWrRy&vOQ"
+    "etsy.com": {
+        "email": "test@gmx.com",
+        "password": "-pH-YI7kX5YBy"
+    },
+    "ebay": {
+        "email": "myemail@gmail.com",
+        "password": "myownpassword234"
     }
 }
