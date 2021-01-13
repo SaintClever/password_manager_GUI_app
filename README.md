@@ -2,7 +2,7 @@
 
 Password manager
 - Add or generate a unique password
-- Stores it into a json file
+- Stores password into a json file
 - Quick copy-and-paste password
 - Search passwords for later usage
 
