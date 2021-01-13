@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
-import string, pyperclip
+import string, pyperclip, json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 # Password Generator Project
@@ -34,21 +34,49 @@ def save_password():
     website = website_entry.get()
     email = email_username_entry.get()
     password = password_entry.get()
+    new_data = {
+        website: {
+            'email': email,
+            'password': password
+        }
+    }
 
     if website == '' or email == '' or password == '':
         messagebox.showinfo(title='Oops!', message='Empty fields present')
     else:
 
         # message box
-        is_ok = messagebox.askokcancel(title=website, message=f'Details entered:\n website: {website}\n Email: {email}\n Password: {password}\n\n Is it ok to save?')
+        # is_ok = messagebox.askokcancel(title=website, message=f'Details entered:\n website: {website}\n Email: {email}\n Password: {password}\n\n Is it ok to save?')
+        # if is_ok:
 
-        if is_ok:
-            with open('data.txt', 'a') as file:
-                file.write(f'{website} | {email} | {password}\n')
+        try:
+            with open('data.json', 'r') as file:
+                # file.write(f'{website} | {email} | {password}\n')
 
-                website_entry.delete(0, END)
-                # email_username_entry.delete(0, END) # I rather save my email
-                password_entry.delete(0, END)
+                # read old data
+                data = json.load(file)
+
+        except FileNotFoundError:
+            with open('data.json', 'w') as file:
+                json.dump(new_data, file, indent=4)
+        else:
+            # update old data with new data
+            data.update(new_data)  # update
+
+            with open('data.json', 'w') as file:
+                # write / save the updated data
+                # indent makes it legible. # write
+                json.dump(data, file, indent=4)
+        finally:
+            website_entry.delete(0, END)
+            # email_username_entry.delete(0, END) # I rather save my email
+            password_entry.delete(0, END)
+
+
+
+# ---------------------------- SEARCH PASSWORD ------------------------------- #
+
+
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -58,7 +86,7 @@ window.config(padx=10, pady=10)
 window.resizable(False, False)
 
 
-canvas = Canvas(width=200, height=200, highlightthickness=0)
+canvas = Canvas(width=100, height=100, highlightthickness=0)
 
 # background
 # bg_img = PhotoImage(file='assets/bg_00.png')
@@ -66,8 +94,8 @@ canvas = Canvas(width=200, height=200, highlightthickness=0)
 # bg_label.place(x=0, y=0)
 
 # logo
-logo_img = PhotoImage(file='assets/logo.png')
-canvas.create_image(100, 100, image=logo_img)
+logo_img = PhotoImage(file='assets/logo_02.png')
+canvas.create_image(50, 50, image=logo_img)
 canvas.grid(column=1, row=0)
 
 
@@ -75,10 +103,13 @@ canvas.grid(column=1, row=0)
 website_label = Label(text='website')
 website_label.grid(column=0, row=1)
 
-website_entry = Entry(width=35)
-website_entry.grid(column=1, row=1, columnspan=2, padx=2.5, pady=2.5)
+website_entry = Entry(width=21)
+website_entry.grid(column=1, row=1, padx=2.5, pady=2.5)
 website_entry.config(highlightbackground='#eeeeee', highlightthickness=.5)
 website_entry.focus()
+
+search_btn = Button(text='search', width=13)
+search_btn.grid(column=2, row=1)
 
 
 # email/usernae row
