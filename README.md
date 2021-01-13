@@ -1,9 +1,9 @@
 # password_manager_GUI_app
 
 Password manager
-- add or generate a unique password
-- stores it into a json file
-- quick copy-and-paste password
-- search passwords for later usage
+- Add or generate a unique password
+- Stores it into a json file
+- Quick copy-and-paste password
+- Search passwords for later usage
 
 ![password_manager](assets/password_manager.gif)
